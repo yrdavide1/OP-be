@@ -9,22 +9,20 @@ namespace OP_beModel.Services
 {
     public interface IPeopleService
     {
-        //Shared
-        IEnumerable<Person> GetAll();
-        IEnumerable<Person> GetPeopleById(long id);
-        IEnumerable<Person> GetPeopleByFirstName(string firstname);
-        IEnumerable<Person> GetPeopleByLastName(string lastName);
-        IEnumerable<Person> GetPeopleByFullName(string firstname, string lastname);
-        IEnumerable<Person> GetPeopleByDateOfBirth(string dateOfBirth);
-        IEnumerable<Person> GetPeopleByAddress(string address);
-        IEnumerable<Person> GetPeopleByCity(string city);
-        IEnumerable<Person> GetPeopleByEmail(string email);
-        IEnumerable<Person> GetPeopleByPhoneNumber(string phoneNumber);
-
         //Users only
-        IEnumerable<User> GetUsers();
+        IEnumerable<User> GetAll();
+        IEnumerable<User> GetUsersById(long id);
+        IEnumerable<User> GetUsersByFirstName(string firstname);
+        IEnumerable<User> GetUsersByLastName(string lastName);
+        IEnumerable<User> GetUsersByFullName(string firstname, string lastname);
+        IEnumerable<User> GetUsersByDateOfBirth(string dateOfBirth);
+        IEnumerable<User> GetUsersByAddress(string address);
+        IEnumerable<User> GetUsersByCity(string city);
+        IEnumerable<User> GetUsersByEmail(string email);
+        IEnumerable<User> GetUsersByPhoneNumber(int phoneNumber);
         IEnumerable<User> GetUsersByGender(string gender);
 
         //Admin only
+        IEnumerable<Administrator> GetAdministrators();
     }
 }
