@@ -10,23 +10,26 @@ namespace OP_beContext.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Administrators",
+                name: "Persons",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    PersonId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsAdministrator = table.Column<bool>(type: "bit", nullable: true),
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false)
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    IsAdministrator = table.Column<bool>(type: "bit", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsUser = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Administrators", x => x.Id);
+                    table.PrimaryKey("PK_Persons", x => x.PersonId);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,28 +46,7 @@ namespace OP_beContext.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsUser = table.Column<bool>(type: "bit", nullable: true),
-                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Closets",
+                name: "Closet",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -74,36 +56,12 @@ namespace OP_beContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Closets", x => x.Id);
+                    table.PrimaryKey("PK_Closet", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Closets_Users_UserId",
+                        name: "FK_Closet_Persons_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ReportUser",
-                columns: table => new
-                {
-                    ReportsId = table.Column<long>(type: "bigint", nullable: false),
-                    UsersId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReportUser", x => new { x.ReportsId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_ReportUser_Reports_ReportsId",
-                        column: x => x.ReportsId,
-                        principalTable: "Reports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReportUser_Users_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -121,15 +79,39 @@ namespace OP_beContext.Migrations
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Users_UserId",
+                        name: "FK_Tickets_Persons_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReportUser",
+                columns: table => new
+                {
+                    ReportsId = table.Column<long>(type: "bigint", nullable: false),
+                    UsersPersonId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportUser", x => new { x.ReportsId, x.UsersPersonId });
+                    table.ForeignKey(
+                        name: "FK_ReportUser_Persons_UsersPersonId",
+                        column: x => x.UsersPersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReportUser_Reports_ReportsId",
+                        column: x => x.ReportsId,
+                        principalTable: "Reports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "Item",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -143,30 +125,30 @@ namespace OP_beContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_Item", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Closets_ClosetId",
+                        name: "FK_Item_Closet_ClosetId",
                         column: x => x.ClosetId,
-                        principalTable: "Closets",
+                        principalTable: "Closet",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Closets_UserId",
-                table: "Closets",
+                name: "IX_Closet_UserId",
+                table: "Closet",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_ClosetId",
-                table: "Items",
+                name: "IX_Item_ClosetId",
+                table: "Item",
                 column: "ClosetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReportUser_UsersId",
+                name: "IX_ReportUser_UsersPersonId",
                 table: "ReportUser",
-                column: "UsersId");
+                column: "UsersPersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_UserId",
@@ -177,10 +159,7 @@ namespace OP_beContext.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Administrators");
-
-            migrationBuilder.DropTable(
-                name: "Items");
+                name: "Item");
 
             migrationBuilder.DropTable(
                 name: "ReportUser");
@@ -189,13 +168,13 @@ namespace OP_beContext.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Closets");
+                name: "Closet");
 
             migrationBuilder.DropTable(
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Persons");
         }
     }
 }

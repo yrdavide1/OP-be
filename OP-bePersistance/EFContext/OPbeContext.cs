@@ -16,6 +16,7 @@ namespace OP_beContext.EFContext
         public DbSet<Ticket>? Tickets { get; set; }
         public DbSet<Closet>? Closets { get; set; }
         public DbSet<Item>? Items { get; set; }
+        public DbSet<Person>? Persons { get; set; }
 
         public OPbeContext() { }
         public OPbeContext(DbContextOptions<OPbeContext> options) : base(options) { }
@@ -27,6 +28,23 @@ namespace OP_beContext.EFContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().ToTable("Persons");
+            modelBuilder.Entity<Administrator>().ToTable("Persons");
+            modelBuilder.Entity<Report>().ToTable("Reports");
+            modelBuilder.Entity<Ticket>().ToTable("Tickets");
+            modelBuilder.Entity<Closet>().ToTable("Closet");
+            modelBuilder.Entity<Item>().ToTable("Item");
+            modelBuilder.Entity<Person>().ToTable("Persons");
+
+            modelBuilder.Entity<Person>()
+                        .HasDiscriminator<string>("Discriminator")
+                        .HasValue<User>("User")
+                        .HasValue<Administrator>("Administrator");
+
+            modelBuilder.Entity<Person>()
+                        .Property("Discriminator")
+                        .HasMaxLength(13);
+
             modelBuilder.Entity<User>()
                         .HasOne(u => u.Closet)
                         .WithOne(c => c.User)

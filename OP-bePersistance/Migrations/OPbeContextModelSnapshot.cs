@@ -22,43 +22,6 @@ namespace OP_beContext.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("OP_beModel.Entities.Administrator", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DateOfBirth")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsAdministrator")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Administrators");
-                });
-
             modelBuilder.Entity("OP_beModel.Entities.Closet", b =>
                 {
                     b.Property<long>("Id")
@@ -78,7 +41,7 @@ namespace OP_beContext.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Closets");
+                    b.ToTable("Closet", (string)null);
                 });
 
             modelBuilder.Entity("OP_beModel.Entities.Item", b =>
@@ -111,7 +74,48 @@ namespace OP_beContext.Migrations
 
                     b.HasIndex("ClosetId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Item", (string)null);
+                });
+
+            modelBuilder.Entity("OP_beModel.Entities.Person", b =>
+                {
+                    b.Property<long>("PersonId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PersonId"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateOfBirth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Firstname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonId");
+
+                    b.ToTable("Persons", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
             modelBuilder.Entity("OP_beModel.Entities.Report", b =>
@@ -127,7 +131,7 @@ namespace OP_beContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("OP_beModel.Entities.Ticket", b =>
@@ -151,47 +155,7 @@ namespace OP_beContext.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("OP_beModel.Entities.User", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DateOfBirth")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsUser")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("ReportUser", b =>
@@ -199,14 +163,41 @@ namespace OP_beContext.Migrations
                     b.Property<long>("ReportsId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UsersId")
+                    b.Property<long>("UsersPersonId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ReportsId", "UsersId");
+                    b.HasKey("ReportsId", "UsersPersonId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UsersPersonId");
 
                     b.ToTable("ReportUser");
+                });
+
+            modelBuilder.Entity("OP_beModel.Entities.Administrator", b =>
+                {
+                    b.HasBaseType("OP_beModel.Entities.Person");
+
+                    b.Property<bool?>("IsAdministrator")
+                        .HasColumnType("bit");
+
+                    b.ToTable("Persons", (string)null);
+
+                    b.HasDiscriminator().HasValue("Administrator");
+                });
+
+            modelBuilder.Entity("OP_beModel.Entities.User", b =>
+                {
+                    b.HasBaseType("OP_beModel.Entities.Person");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsUser")
+                        .HasColumnType("bit");
+
+                    b.ToTable("Persons", (string)null);
+
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("OP_beModel.Entities.Closet", b =>
@@ -252,7 +243,7 @@ namespace OP_beContext.Migrations
 
                     b.HasOne("OP_beModel.Entities.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UsersPersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
