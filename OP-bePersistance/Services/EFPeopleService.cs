@@ -28,32 +28,32 @@ namespace OP_beContext.Services
 
         public IEnumerable<User> GetAll()
         {
-            return userRepo.GetAll();
+            return userRepo.GetAll().ToList();
         }
 
         public IEnumerable<User> GetUsersByAddress(string address)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByAddress(address).ToList();
         }
 
         public IEnumerable<User> GetUsersByCity(string city)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByCity(city).ToList();
         }
 
         public IEnumerable<User> GetUsersByDateOfBirth(string dateOfBirth)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByDateOfBirth(dateOfBirth).ToList();
         }
 
         public IEnumerable<User> GetUsersByEmail(string email)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByEmail(email).ToList();
         }
 
-        public IEnumerable<User> GetUsersByFirstName(string firstname)
+        public IEnumerable<User> GetUsersByFirstName(string firstName)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByFirstName(firstName).ToList();
         }
 
         public IEnumerable<User> GetUsersByFullName(string firstname, string lastname)
@@ -63,22 +63,22 @@ namespace OP_beContext.Services
 
         public IEnumerable<User> GetUsersByGender(string gender)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByGender(gender).ToList();
         }
 
         public IEnumerable<User> GetUsersById(long id)
         {
-            throw new NotImplementedException();
+            return userRepo.FindById(id).ToList();
         }
 
         public IEnumerable<User> GetUsersByLastName(string lastName)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByLastName(lastName).ToList();
         }
 
-        public IEnumerable<User> GetUsersByPhoneNumber(int phoneNumber)
+        public IEnumerable<User> GetUsersByPhoneNumber(string phoneNumber)
         {
-            throw new NotImplementedException();
+            return userRepo.FindByPhoneNumber(phoneNumber).ToList();
         }
     }
 }

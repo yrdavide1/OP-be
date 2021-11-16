@@ -19,7 +19,7 @@ namespace OP_beModel.Services
         IEnumerable<User> GetUsersByAddress(string address);
         IEnumerable<User> GetUsersByCity(string city);
         IEnumerable<User> GetUsersByEmail(string email);
-        IEnumerable<User> GetUsersByPhoneNumber(int phoneNumber);
+        IEnumerable<User> GetUsersByPhoneNumber(string phoneNumber);
         IEnumerable<User> GetUsersByGender(string gender);
 
         //Admin only

@@ -20,5 +20,13 @@ namespace OP_be.Controllers
             var users = service.GetAll();
             return Ok(users);
         }
+
+        [HttpGet]
+        [Route("address/{address}")]
+        public IActionResult GetByAddress(string address)
+        {
+            var users = service.GetUsersByAddress(address);
+            return Ok(users);
+        }
     }
 }

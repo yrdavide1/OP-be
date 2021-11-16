@@ -12,7 +12,7 @@ namespace OP_beModel.Repositories
         void Delete(T entity);
         void Delete(K key);
         T Update(T entity);
-        T FindById(K key);
+        IEnumerable<T> FindById(K key);
         IEnumerable<T> GetAll();
     }
 }
