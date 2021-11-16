@@ -17,7 +17,7 @@ namespace OP_beModel.Repositories
         public IEnumerable<User> FindByLastName(string lastName);
         public IEnumerable<User> FindByFullName(string fullName);
         public IEnumerable<User> FindByGender(string gender);
-        public IEnumerable<User> FindByPhoneNumber(int phoneNumber);
+        public IEnumerable<User> FindByPhoneNumber(string phoneNumber);
 
     }
 }

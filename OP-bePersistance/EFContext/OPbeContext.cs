@@ -23,7 +23,7 @@ namespace OP_beContext.EFContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server = 173.249.39.182; User Id=SA; Password=9EFD8a1744@; Database = OP");
+            optionsBuilder.UseSqlServer("Server = 173.249.39.182; User Id=SA; Password=9EFD8a1744@; Database = OP");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

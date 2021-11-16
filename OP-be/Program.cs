@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using OP_beContext.EFContext;
 using OP_beContext.Repositories;
@@ -17,8 +16,6 @@ builder.Services.AddScoped<IPeopleService, EFPeopleService>();
 builder.Services.AddCors(c => c.AddPolicy("alloworigin", options => options.AllowAnyOrigin()
                                                                             .AllowAnyHeader()
                                                                             .AllowAnyMethod()));
-//AutoMapper config
-builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

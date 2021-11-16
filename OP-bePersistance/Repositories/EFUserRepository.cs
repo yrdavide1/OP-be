@@ -53,9 +53,9 @@ namespace OP_beContext.Repositories
             return ctx.Users.Where(u => u.Lastname.Contains(lastName));
         }
 
-        public IEnumerable<User> FindByPhoneNumber(int phoneNumber)
+        public IEnumerable<User> FindByPhoneNumber(string phoneNumber)
         {
-            return ctx.Users.Where(u => u.PhoneNumber == phoneNumber);
+            return ctx.Users.Where(u => u.PhoneNumber.Contains(phoneNumber));
         }
     }
 }

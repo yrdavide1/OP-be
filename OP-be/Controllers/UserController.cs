@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using OP_be.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
 using OP_beModel.Services;
 
 namespace OP_be.Controllers
@@ -10,20 +8,17 @@ namespace OP_be.Controllers
     public class UserController : Controller
     {
         private IPeopleService service;
-        private IMapper mapper;
 
-        public UserController(IPeopleService service, IMapper mapper)
+        public UserController(IPeopleService service)
         {
             this.service = service;
-            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
             var users = service.GetAll();
-            var usersDTOs = mapper.Map<IEnumerable<UserDTO>>(users);
-            return Ok(usersDTOs);
+            return Ok(users);
         }
     }
 }
