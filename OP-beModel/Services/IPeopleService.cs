@@ -11,7 +11,7 @@ namespace OP_beModel.Services
     {
         //Users only
         IEnumerable<User> GetAll();
-        IEnumerable<User> GetUsersById(long id);
+        User GetUsersById(long id);
         IEnumerable<User> GetUsersByFirstName(string firstname);
         IEnumerable<User> GetUsersByLastName(string lastName);
         IEnumerable<User> GetUsersByFullName(string firstname, string lastname);

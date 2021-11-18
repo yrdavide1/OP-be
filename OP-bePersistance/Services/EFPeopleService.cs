@@ -66,9 +66,9 @@ namespace OP_beContext.Services
             return userRepo.FindByGender(gender).ToList();
         }
 
-        public IEnumerable<User> GetUsersById(long id)
+        public User GetUsersById(long id)
         {
-            return userRepo.FindById(id).ToList();
+            return userRepo.FindById(id);
         }
 
         public IEnumerable<User> GetUsersByLastName(string lastName)
