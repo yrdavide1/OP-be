@@ -13,49 +13,27 @@ namespace OP_beContext.Repositories
     {
         public EFUserRepository(OPbeContext ctx) : base(ctx) { }
 
-        public IEnumerable<User> FindByAddress(string address)
+        public IEnumerable<User> FindByField(string field, string value)
         {
-            return ctx.Users.Where(u => u.Address == address);
-        }
+            var allUsers = GetAll().ToList<User>();
+            List<User> filteredUsers = new List<User>();
 
-        public IEnumerable<User> FindByCity(string city)
-        {
-            return ctx.Users.Where(u => u.City == city);
-        }
+            if (field == "Id") return FindById(long.Parse(field));
 
-        public IEnumerable<User> FindByDateOfBirth(string dateOfBirth)
-        {
-            return ctx.Users.Where(u => u.DateOfBirth == dateOfBirth);
-        }
+            foreach(var u in allUsers)
+            {
+                var props = u.GetType().GetProperties();
+                foreach(var prop in props)
+                {
+                    if (prop.Name == field) 
+                    {
+                        var propValue = prop.GetValue(u);
+                        if(propValue.ToString() == value) filteredUsers.Add(u);
+                    }
+                }
+            }
 
-        public IEnumerable<User> FindByEmail(string email)
-        {
-            return ctx.Users.Where(u => u.Email == email);
-        }
-
-        public IEnumerable<User> FindByFirstName(string firstName)
-        {
-            return ctx.Users.Where(u => u.Firstname == firstName);
-        }
-
-        public IEnumerable<User> FindByFullName(string fullName)
-        {
-            return ctx.Users.Where(u => u.FullName == fullName);   
-        }
-
-        public IEnumerable<User> FindByGender(string gender)
-        {
-            return ctx.Users.Where(u => u.Gender == gender);
-        }
-
-        public IEnumerable<User> FindByLastName(string lastName)
-        {
-            return ctx.Users.Where(u => u.Lastname == lastName);
-        }
-
-        public IEnumerable<User> FindByPhoneNumber(string phoneNumber)
-        {
-            return ctx.Users.Where(u => u.PhoneNumber == phoneNumber);
+            return filteredUsers;
         }
     }
 }

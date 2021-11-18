@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//delegate IEnumerable<User> userSearchRepo(string value);
 namespace OP_beContext.Services
 {
     public class EFPeopleService : IPeopleService
@@ -21,64 +22,19 @@ namespace OP_beContext.Services
             this.ctx = ctx;
         }
 
-        public IEnumerable<Administrator> GetAdministrators()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<User> GetAll()
         {
             return userRepo.GetAll().ToList();
         }
 
-        public IEnumerable<User> GetUsersByAddress(string address)
-        {
-            return userRepo.FindByAddress(address).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByCity(string city)
-        {
-            return userRepo.FindByCity(city).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByDateOfBirth(string dateOfBirth)
-        {
-            return userRepo.FindByDateOfBirth(dateOfBirth).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByEmail(string email)
-        {
-            return userRepo.FindByEmail(email).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByFirstName(string firstName)
-        {
-            return userRepo.FindByFirstName(firstName).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByFullName(string firstname, string lastname)
+        public User GetUserById(long id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetUsersByGender(string gender)
+        public IEnumerable<User> CustomFilter(string field, string value)
         {
-            return userRepo.FindByGender(gender).ToList();
-        }
-
-        public User GetUsersById(long id)
-        {
-            return userRepo.FindById(id);
-        }
-
-        public IEnumerable<User> GetUsersByLastName(string lastName)
-        {
-            return userRepo.FindByLastName(lastName).ToList();
-        }
-
-        public IEnumerable<User> GetUsersByPhoneNumber(string phoneNumber)
-        {
-            return userRepo.FindByPhoneNumber(phoneNumber).ToList();
+            return userRepo.FindByField(field, value);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OP_beModel.Entities;
 using OP_beModel.Services;
 
+//delegate IEnumerable<User> userSearch(string field);
 namespace OP_be.Controllers
 {
     [Route("api/[controller]")]
@@ -22,77 +24,15 @@ namespace OP_be.Controllers
             return Ok(users);
         }
 
+        //adding a single call which automatically choses the field to use to filter results
         [HttpPost]
-        [Route("address")]
-        public IActionResult GetByAddress([FromQuery] string address)
+        [Route("search")]
+        public IActionResult FilterUsers([FromQuery] string field, [FromQuery] string value)
         {
-            var users = service.GetUsersByAddress(address);
+            var users = service.CustomFilter(field, value);
             return Ok(users);
         }
 
-        [HttpPost]
-        [Route("city")]
-        public IActionResult GetByCity([FromQuery] string city)
-        {
-            var users = service.GetUsersByCity(city);
-            return Ok(users);   
-        }
-
-        [HttpPost]
-        [Route("dateofbirth")]
-        public IActionResult GetByDateOfBirth([FromQuery] string dateOfBirth)
-        {
-            var users = service.GetUsersByDateOfBirth(dateOfBirth);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("email")]
-        public IActionResult GetByEmail([FromQuery] string email)
-        {
-            var users = service.GetUsersByEmail(email);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("firstname")]
-        public IActionResult GetByFirstName([FromQuery] string firstname)
-        {
-            var users = service.GetUsersByFirstName(firstname);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("gender")]
-        public IActionResult GetByGender([FromQuery] string gender)
-        {
-            var users = service.GetUsersByGender(gender);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("id")]
-        public IActionResult GetById([FromQuery] long personId)
-        {
-            var users = service.GetUsersById(personId);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("lastname")]
-        public IActionResult GetByLastName([FromQuery] string lastname)
-        {
-            var users = service.GetUsersByLastName(lastname);
-            return Ok(users);
-        }
-
-        [HttpPost]
-        [Route("phone")]
-        public IActionResult GetByPhoneNumber([FromQuery] string phoneNumber)
-        {
-            var users = service.GetUsersByPhoneNumber(phoneNumber);
-            return Ok(users);
-        }
         #endregion
     }
 }
