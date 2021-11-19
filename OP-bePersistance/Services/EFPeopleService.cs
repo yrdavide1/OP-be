@@ -29,12 +29,19 @@ namespace OP_beContext.Services
 
         public User GetUserById(long id)
         {
-            throw new NotImplementedException();
+            return userRepo.FindById(id).First();
         }
 
         public IEnumerable<User> CustomFilter(string field, string value)
         {
             return userRepo.FindByField(field, value);
+        }
+
+        public User CreateUser(User u)
+        {
+            userRepo.Create(u);
+            ctx.SaveChanges();
+            return u;
         }
     }
 }

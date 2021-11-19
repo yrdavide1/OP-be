@@ -14,6 +14,8 @@ namespace OP_beModel.Services
         User GetUserById(long id);
         IEnumerable<User> CustomFilter(string field, string value);
 
+        User CreateUser(User u);
+
         //Admin only
     }
 }

@@ -24,6 +24,14 @@ namespace OP_be.Controllers
             return Ok(users);
         }
 
+        [HttpPost]
+        [Route("id")]
+        public IActionResult GetById([FromQuery] long id)
+        {
+            var user = service.GetUserById(id);
+            return Ok(user);
+        }
+
         //adding a single call which automatically choses the field to use to filter results
         [HttpPost]
         [Route("search")]
@@ -32,7 +40,16 @@ namespace OP_be.Controllers
             var users = service.CustomFilter(field, value);
             return Ok(users);
         }
+        #endregion
 
+        #region CREATE
+        [HttpPost]
+        [Route("create")]
+        public IActionResult CreateUser([FromBody] User u)
+        {
+            service.CreateUser(u);
+            return Created($"/api/user/id?id={u.PersonId}", u);
+        }
         #endregion
     }
 }
