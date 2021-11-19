@@ -43,5 +43,11 @@ namespace OP_beContext.Services
             ctx.SaveChanges();
             return u;
         }
+
+        public void DeleteUser(long id)
+        {
+            userRepo.Delete(id);
+            ctx.SaveChanges();
+        }
     }
 }

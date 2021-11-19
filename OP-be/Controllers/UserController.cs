@@ -51,5 +51,15 @@ namespace OP_be.Controllers
             return Created($"/api/user/id?id={u.PersonId}", u);
         }
         #endregion
+
+        #region DELETE 
+        [HttpDelete]
+        public IActionResult DeleteUser([FromQuery] long id)
+        {
+            var user = service.GetUserById(id);
+            service.DeleteUser(id);
+            return Ok(user);
+        }
+        #endregion
     }
 }

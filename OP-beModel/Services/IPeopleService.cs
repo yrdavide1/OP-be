@@ -13,8 +13,8 @@ namespace OP_beModel.Services
         IEnumerable<User> GetAll();
         User GetUserById(long id);
         IEnumerable<User> CustomFilter(string field, string value);
-
         User CreateUser(User u);
+        void DeleteUser(long id);
 
         //Admin only
     }
