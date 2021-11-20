@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>OP_be</RootNamespace>
+    <UserSecretsId>a5ed0f33-9e50-4fb7-8f19-0bdebfbc04eb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

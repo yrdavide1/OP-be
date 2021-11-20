@@ -82,12 +82,12 @@ namespace OP_be.Controllers
         #endregion
 
         #region LOGIN
-        [HttpPost]
-        [Route("login")]
-        public IActionResult UserLogin([])
-        {
+        //[HttpPost]
+        //[Route("login")]
+        //public IActionResult UserLogin([])
+        //{
 
-        }
+        //}
         #endregion
     }
 }
