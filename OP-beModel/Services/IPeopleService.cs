@@ -19,5 +19,10 @@ namespace OP_beModel.Services
         User UpdateUserField(long id, string field, string value);
 
         //Admin only
+        IEnumerable<Administrator> GetAdministrators();
+        Administrator GetAdminById(long id);
+        Administrator CreateAdministrator(Administrator a);
+        void DeleteAdministrator(long id);
+
     }
 }

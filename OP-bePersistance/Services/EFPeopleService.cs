@@ -14,11 +14,14 @@ namespace OP_beContext.Services
     public class EFPeopleService : IPeopleService
     {
         private OPbeContext ctx;
-        private IUserRepository userRepo;    
-        
-        public EFPeopleService(IUserRepository userRepo, OPbeContext ctx)
+        private IUserRepository userRepo;
+        private IAdminRepository adminRepo;
+
+        #region USER
+        public EFPeopleService(IUserRepository userRepo, IAdminRepository adminRepo, OPbeContext ctx)
         {
             this.userRepo = userRepo;
+            this.adminRepo = adminRepo;
             this.ctx = ctx;
         }
 
@@ -65,5 +68,31 @@ namespace OP_beContext.Services
             ctx.SaveChanges();
             return user;
         }
+        #endregion
+
+        #region ADMIN
+        public IEnumerable<Administrator> GetAdministrators()
+        {
+            return adminRepo.GetAll().ToList();
+        }
+
+        public Administrator GetAdminById(long id)
+        {
+            return adminRepo.FindById(id).First();
+        }
+
+        public Administrator CreateAdministrator(Administrator a)
+        {
+            var admin = adminRepo.Create(a);
+            ctx.SaveChanges();
+            return admin;
+        }
+
+        public void DeleteAdministrator(long id)
+        {
+            adminRepo.Delete(id);
+            ctx.SaveChanges();
+        }
+        #endregion
     }
 }
