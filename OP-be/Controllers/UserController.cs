@@ -54,11 +54,22 @@ namespace OP_be.Controllers
 
         #region DELETE 
         [HttpDelete]
+        [Route("delete")]
         public IActionResult DeleteUser([FromQuery] long id)
         {
             var user = service.GetUserById(id);
             service.DeleteUser(id);
             return Ok(user);
+        }
+        #endregion
+
+        #region UPDATE
+        [HttpPut]
+        [Route("update")]
+        public IActionResult UpdateUser([FromBody] User u) //!!!REQUIRES ID IN REQUEST BODY!!!
+        {
+            var user = service.UpdateUser(u);
+            return Created($"/api/user/id?id={u.PersonId}", u);
         }
         #endregion
     }

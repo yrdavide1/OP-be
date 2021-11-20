@@ -49,5 +49,12 @@ namespace OP_beContext.Services
             userRepo.Delete(id);
             ctx.SaveChanges();
         }
+
+        public User UpdateUser(User u)
+        {
+            userRepo.Update(u);
+            ctx.SaveChanges();
+            return u;
+        }
     }
 }

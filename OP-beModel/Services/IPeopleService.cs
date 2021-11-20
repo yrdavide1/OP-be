@@ -15,6 +15,7 @@ namespace OP_beModel.Services
         IEnumerable<User> CustomFilter(string field, string value);
         User CreateUser(User u);
         void DeleteUser(long id);
+        User UpdateUser(User u);
 
         //Admin only
     }
