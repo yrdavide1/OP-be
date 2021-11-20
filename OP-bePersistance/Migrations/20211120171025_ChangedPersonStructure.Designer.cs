@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OP_beContext.EFContext;
 
@@ -11,9 +12,10 @@ using OP_beContext.EFContext;
 namespace OP_beContext.Migrations
 {
     [DbContext(typeof(OPbeContext))]
-    partial class OPbeContextModelSnapshot : ModelSnapshot
+    [Migration("20211120171025_ChangedPersonStructure")]
+    partial class ChangedPersonStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
