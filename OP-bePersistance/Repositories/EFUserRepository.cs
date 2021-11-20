@@ -15,10 +15,10 @@ namespace OP_beContext.Repositories
 
         public IEnumerable<User> FindByField(string field, string value)
         {
-            var allUsers = GetAll().ToList<User>();
-            List<User> filteredUsers = new List<User>();
+            var allUsers = GetAll().ToList();
+            List<User> filteredUsers = new();
 
-            if (field == "Id") return FindById(long.Parse(field));
+            if (field == "PersonId") return FindById(long.Parse(value));
 
             foreach(var u in allUsers)
             {

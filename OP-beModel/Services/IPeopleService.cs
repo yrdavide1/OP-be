@@ -16,6 +16,7 @@ namespace OP_beModel.Services
         User CreateUser(User u);
         void DeleteUser(long id);
         User UpdateUser(User u);
+        User UpdateUserField(long id, string field, string value);
 
         //Admin only
     }

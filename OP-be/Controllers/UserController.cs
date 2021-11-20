@@ -71,6 +71,15 @@ namespace OP_be.Controllers
             var user = service.UpdateUser(u);
             return Created($"/api/user/id?id={u.PersonId}", u);
         }
+
+        [HttpPatch]
+        [Route("update")]
+        public IActionResult UpdateUserField([FromQuery] long id, [FromQuery] string field, [FromQuery] string value)
+        {
+            var user = service.UpdateUserField(id, field, value);
+            return Ok(user);
+        }
         #endregion
+
     }
 }

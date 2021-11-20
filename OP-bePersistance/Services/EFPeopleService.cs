@@ -56,5 +56,14 @@ namespace OP_beContext.Services
             ctx.SaveChanges();
             return u;
         }
+
+        public User UpdateUserField(long id, string field, string value)
+        {
+            var user = userRepo.FindById(id).First();
+            if(field != "PersonId") user.GetType().GetProperty(field).SetValue(user, value, null);
+            userRepo.Update(user);
+            ctx.SaveChanges();
+            return user;
+        }
     }
 }
