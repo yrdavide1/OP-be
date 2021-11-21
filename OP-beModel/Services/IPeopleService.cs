@@ -11,18 +11,17 @@ namespace OP_beModel.Services
     {
         //Users only
         IEnumerable<User> GetAll();
-        User GetUserById(long id);
-        IEnumerable<User> CustomFilter(string field, string value);
-        User CreateUser(User u);
+        User? GetUserById(long id);
+        User? CustomFilter(string field, string value);
+        User? CreateUser(User u);
         void DeleteUser(long id);
         User UpdateUser(User u);
         User UpdateUserField(long id, string field, string value);
 
         //Admin only
         IEnumerable<Administrator> GetAdministrators();
-        Administrator GetAdminById(long id);
-        Administrator CreateAdministrator(Administrator a);
+        Administrator? GetAdminById(long id);
+        Administrator? CreateAdministrator(Administrator a);
         void DeleteAdministrator(long id);
-
     }
 }

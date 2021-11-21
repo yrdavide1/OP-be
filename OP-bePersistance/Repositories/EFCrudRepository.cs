@@ -36,11 +36,9 @@ namespace OP_beContext.Repositories
             entities.Remove(found);
         }
 
-        public IEnumerable<T> FindById(K key)
+        public T? FindById(K key)
         {
-            var found = new List<T>();
-            found.Add(entities.Find(key));
-            return found;
+            return entities.Find(key);
         }
 
         public IEnumerable<T> GetAll()

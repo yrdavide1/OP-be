@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace OP_beModel.Repositories
 {
     public interface IUserRepository : ICrudRepository<User, long>
-    { 
+    {
 
-        public IEnumerable<User> FindByField(string field, string value); 
-
+        public User? FindByField(string field, string value);
     }
 }

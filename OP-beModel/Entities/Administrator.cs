@@ -16,6 +16,7 @@ namespace OP_beModel.Entities
 {
     public class Administrator : Person
     {
+        public string? Token { get; set; }
         public Level Level { get; set; }
     }
 }

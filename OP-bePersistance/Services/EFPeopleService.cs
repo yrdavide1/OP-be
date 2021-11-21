@@ -17,7 +17,6 @@ namespace OP_beContext.Services
         private IUserRepository userRepo;
         private IAdminRepository adminRepo;
 
-        #region USER
         public EFPeopleService(IUserRepository userRepo, IAdminRepository adminRepo, OPbeContext ctx)
         {
             this.userRepo = userRepo;
@@ -25,23 +24,29 @@ namespace OP_beContext.Services
             this.ctx = ctx;
         }
 
+        #region USER
         public IEnumerable<User> GetAll()
         {
             return userRepo.GetAll().ToList();
         }
 
-        public User GetUserById(long id)
+        public User? GetUserById(long id)
         {
-            return userRepo.FindById(id).First();
+            return userRepo.FindById(id);
         }
 
-        public IEnumerable<User> CustomFilter(string field, string value)
+        public User? CustomFilter(string field, string value)
         {
             return userRepo.FindByField(field, value);
         }
 
-        public User CreateUser(User u)
+        public User? CreateUser(User u)
         {
+            var users = GetAll();
+            foreach(var user in users)
+            {
+                if (user.Username == u.Username || user.Email == u.Email) return null;
+            }
             userRepo.Create(u);
             ctx.SaveChanges();
             return u;
@@ -62,7 +67,7 @@ namespace OP_beContext.Services
 
         public User UpdateUserField(long id, string field, string value)
         {
-            var user = userRepo.FindById(id).First();
+            var user = userRepo.FindById(id);
             if(field != "PersonId") user.GetType().GetProperty(field).SetValue(user, value, null);
             userRepo.Update(user);
             ctx.SaveChanges();
@@ -76,16 +81,21 @@ namespace OP_beContext.Services
             return adminRepo.GetAll().ToList();
         }
 
-        public Administrator GetAdminById(long id)
+        public Administrator? GetAdminById(long id)
         {
-            return adminRepo.FindById(id).First();
+            return adminRepo.FindById(id);
         }
 
-        public Administrator CreateAdministrator(Administrator a)
+        public Administrator? CreateAdministrator(Administrator a)
         {
-            var admin = adminRepo.Create(a);
+            var admins = GetAll();
+            foreach (var admin in admins)
+            {
+                if (admin.Username == a.Username) return null;
+            }
+            adminRepo.Create(a);
             ctx.SaveChanges();
-            return admin;
+            return a;
         }
 
         public void DeleteAdministrator(long id)

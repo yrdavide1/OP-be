@@ -84,11 +84,11 @@ namespace OP_be.Controllers
         #region LOGIN
         [HttpPost]
         [Route("login")]
-        public IActionResult UserLogin([FromQuery] long id, [FromQuery] string username, [FromQuery] string password)
+        public IActionResult UserLogin([FromQuery] string username, [FromQuery] string password)
         {
-            var user = service.GetUserById(id);
-            if (password == user.Password && username == user.Username) return Ok();
-            return NotFound();
+            User? user = service.CustomFilter("Username", username);
+            if (password == user.Password && username == user.Username) return Ok(user);
+            return NoContent();
         }
         #endregion
     }

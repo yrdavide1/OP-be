@@ -13,10 +13,10 @@ namespace OP_beContext.Repositories
     {
         public EFUserRepository(OPbeContext ctx) : base(ctx) { }
 
-        public IEnumerable<User> FindByField(string field, string value)
+        public User? FindByField(string field, string value)
         {
             var allUsers = GetAll().ToList();
-            List<User> filteredUsers = new();
+            User found = new();
 
             if (field == "PersonId") return FindById(long.Parse(value));
 
@@ -28,12 +28,12 @@ namespace OP_beContext.Repositories
                     if (prop.Name == field) 
                     {
                         var propValue = prop.GetValue(u);
-                        if(propValue.ToString() == value) filteredUsers.Add(u);
+                        if(propValue.ToString() == value) found = u;
                     }
                 }
             }
 
-            return filteredUsers;
+            return found;
         }
     }
 }
