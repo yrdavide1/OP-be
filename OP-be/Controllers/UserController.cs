@@ -82,12 +82,14 @@ namespace OP_be.Controllers
         #endregion
 
         #region LOGIN
-        //[HttpPost]
-        //[Route("login")]
-        //public IActionResult UserLogin([])
-        //{
-
-        //}
+        [HttpPost]
+        [Route("login")]
+        public IActionResult UserLogin([FromQuery] long id, [FromQuery] string username, [FromQuery] string password)
+        {
+            var user = service.GetUserById(id);
+            if (password == user.Password && username == user.Username) return Ok();
+            return NotFound();
+        }
         #endregion
     }
 }
