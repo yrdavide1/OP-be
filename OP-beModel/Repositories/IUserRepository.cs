@@ -9,7 +9,6 @@ namespace OP_beModel.Repositories
 {
     public interface IUserRepository : ICrudRepository<User, long>
     {
-
         public User? FindByField(string field, string value);
     }
 }

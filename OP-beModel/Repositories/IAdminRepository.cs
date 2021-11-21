@@ -9,5 +9,6 @@ namespace OP_beModel.Repositories
 {
     public interface IAdminRepository : ICrudRepository<Administrator, long>
     {
+        Administrator? FindByUsername(string username);
     }
 }

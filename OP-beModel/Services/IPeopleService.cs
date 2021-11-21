@@ -21,6 +21,7 @@ namespace OP_beModel.Services
         //Admin only
         IEnumerable<Administrator> GetAdministrators();
         Administrator? GetAdminById(long id);
+        Administrator? GetAdminByUsername(string username);
         Administrator? CreateAdministrator(Administrator a);
         void DeleteAdministrator(long id);
     }
