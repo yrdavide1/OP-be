@@ -14,6 +14,7 @@ builder.Services.AddDbContext<OPbeContext>(x => x.UseSqlServer(connectionString)
 builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IPeopleService, EFPeopleService>();
 builder.Services.AddScoped<IAdminRepository, EFAdminRepository>();
+builder.Services.AddScoped<ITokenRepository, EFTokenRepository>();
 builder.Services.AddCors(c => c.AddPolicy("alloworigin", options => options.AllowAnyOrigin()
                                                                             .AllowAnyHeader()
                                                                             .AllowAnyMethod()));

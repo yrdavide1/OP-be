@@ -16,11 +16,13 @@ namespace OP_beContext.Services
         private OPbeContext ctx;
         private IUserRepository userRepo;
         private IAdminRepository adminRepo;
+        private ITokenRepository tokenRepo;
 
-        public EFPeopleService(IUserRepository userRepo, IAdminRepository adminRepo, OPbeContext ctx)
+        public EFPeopleService(IUserRepository userRepo, IAdminRepository adminRepo, ITokenRepository tokenRepo, OPbeContext ctx)
         {
             this.userRepo = userRepo;
             this.adminRepo = adminRepo;
+            this.tokenRepo = tokenRepo;
             this.ctx = ctx;
         }
 
@@ -107,6 +109,13 @@ namespace OP_beContext.Services
         {
             adminRepo.Delete(id);
             ctx.SaveChanges();
+        }
+        #endregion
+
+        #region TOKEN
+        public Token? GetTokenById(long id)
+        {
+            return tokenRepo.FindById(id);
         }
         #endregion
     }

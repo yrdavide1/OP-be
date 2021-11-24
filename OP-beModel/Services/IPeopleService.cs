@@ -24,5 +24,8 @@ namespace OP_beModel.Services
         Administrator? GetAdminByUsername(string username);
         Administrator? CreateAdministrator(Administrator a);
         void DeleteAdministrator(long id);
+
+        //Token only
+        Token? GetTokenById(long id);
     }
 }
