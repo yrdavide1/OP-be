@@ -1,4 +1,5 @@
-﻿using OP_beContext.EFContext;
+﻿using Microsoft.EntityFrameworkCore;
+using OP_beContext.EFContext;
 using OP_beModel.Entities;
 using OP_beModel.Repositories;
 using System;
@@ -11,8 +12,26 @@ namespace OP_beContext.Repositories
 {
     public class EFUserRepository : EFCrudRepository<User, long >, IUserRepository
     {
-        public EFUserRepository(OPbeContext ctx) : base(ctx) { }
+        private DbSet<User> users;
+        private DbSet<Token> tokens;
 
+        public EFUserRepository(OPbeContext ctx) : base(ctx) 
+        {
+            users = ctx.Users;
+            tokens = ctx.Tokens;
+        }
+        public User CreateUser(User u)
+        {
+            string newToken = TokenGenerator();
+            string now = DateTime.Now.ToString("g");
+            var token = new Token(u, newToken, now);
+            u.Token = token;
+            users.Add(u);
+            tokens.Add(token);
+            ctx.SaveChanges();
+
+            return u;
+        }
         public User? FindByField(string field, string value)
         {
             var allUsers = GetAll().ToList();
@@ -34,6 +53,16 @@ namespace OP_beContext.Repositories
             }
 
             return found;
+        }
+        private static string TokenGenerator()
+        {
+            string allChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.-_@";
+            Random random = new Random();
+            string resultToken = new string(
+               Enumerable.Repeat(allChar, 8)
+               .Select(token => token[random.Next(token.Length)]).ToArray());
+
+            return resultToken.ToString();
         }
     }
 }

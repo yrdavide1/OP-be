@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OP_beContext.EFContext;
 
@@ -11,9 +12,10 @@ using OP_beContext.EFContext;
 namespace OP_beContext.Migrations
 {
     [DbContext(typeof(OPbeContext))]
-    partial class OPbeContextModelSnapshot : ModelSnapshot
+    [Migration("20211124112942_AddedDbSetToken")]
+    partial class AddedDbSetToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,9 +159,15 @@ namespace OP_beContext.Migrations
                     b.Property<string>("SessionToken")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Tokens", (string)null);
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Tokens");
                 });
 
             modelBuilder.Entity("ReportUser", b =>
@@ -217,13 +225,6 @@ namespace OP_beContext.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TokenId")
-                        .HasColumnType("bigint");
-
-                    b.HasIndex("TokenId")
-                        .IsUnique()
-                        .HasFilter("[TokenId] IS NOT NULL");
-
                     b.ToTable("Persons", (string)null);
 
                     b.HasDiscriminator().HasValue("User");
@@ -262,6 +263,17 @@ namespace OP_beContext.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OP_beModel.Entities.Token", b =>
+                {
+                    b.HasOne("OP_beModel.Entities.User", "User")
+                        .WithOne("Token")
+                        .HasForeignKey("OP_beModel.Entities.Token", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ReportUser", b =>
                 {
                     b.HasOne("OP_beModel.Entities.Report", null)
@@ -277,25 +289,9 @@ namespace OP_beContext.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OP_beModel.Entities.User", b =>
-                {
-                    b.HasOne("OP_beModel.Entities.Token", "Token")
-                        .WithOne("User")
-                        .HasForeignKey("OP_beModel.Entities.User", "TokenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Token");
-                });
-
             modelBuilder.Entity("OP_beModel.Entities.Closet", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("OP_beModel.Entities.Token", b =>
-                {
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OP_beModel.Entities.User", b =>
@@ -303,6 +299,8 @@ namespace OP_beContext.Migrations
                     b.Navigation("Closet");
 
                     b.Navigation("Ticket");
+
+                    b.Navigation("Token");
                 });
 #pragma warning restore 612, 618
         }

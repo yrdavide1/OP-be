@@ -47,7 +47,7 @@ namespace OP_beContext.Services
             {
                 if (user.Username == u.Username || user.Email == u.Email) return null;
             }
-            userRepo.Create(u);
+            userRepo.CreateUser(u);
             ctx.SaveChanges();
             return u;
         }
@@ -98,7 +98,6 @@ namespace OP_beContext.Services
             {
                 if (admin.Username == a.Username) return null;
             }
-            a.Token = TokenGenerator();
             adminRepo.Create(a);
             ctx.SaveChanges();
             return a;
@@ -110,16 +109,5 @@ namespace OP_beContext.Services
             ctx.SaveChanges();
         }
         #endregion
-        private static string TokenGenerator()
-        {
-            string allChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.-_@";
-            Random random = new Random();
-            string resultToken = new string(
-               Enumerable.Repeat(allChar, 8)
-               .Select(token => token[random.Next(token.Length)]).ToArray());
-
-            return resultToken.ToString();
-        }
-
     }
 }

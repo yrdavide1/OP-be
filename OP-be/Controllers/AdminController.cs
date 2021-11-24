@@ -54,14 +54,14 @@ namespace OP_be.Controllers
         #endregion
 
         #region LOGIN
-        [HttpPost]
-        [Route("login")]
-        public IActionResult AdminLogin([FromQuery] string token, [FromQuery] string username, [FromQuery] string password)
-        {
-            var admin = service.GetAdminByUsername(username);
-            if(password == admin.Password && token == admin.Token) return Ok(admin);
-            return NoContent();
-        }
+        //[HttpPost]
+        //[Route("login")]
+        //public IActionResult AdminLogin([FromQuery] string token, [FromQuery] string username, [FromQuery] string password)
+        //{
+        //    var admin = service.GetAdminByUsername(username);
+        //    if(password == admin.Password && token == admin.Token) return Ok(admin);
+        //    return NoContent();
+        //}
         #endregion
     }
 }

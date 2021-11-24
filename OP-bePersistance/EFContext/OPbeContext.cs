@@ -17,6 +17,7 @@ namespace OP_beContext.EFContext
         public DbSet<Closet>? Closets { get; set; }
         public DbSet<Item>? Items { get; set; }
         public DbSet<Person>? Persons { get; set; }
+        public DbSet<Token>? Tokens { get; set; }
 
         public OPbeContext() { }
         public OPbeContext(DbContextOptions<OPbeContext> options) : base(options) { }
@@ -35,6 +36,7 @@ namespace OP_beContext.EFContext
             modelBuilder.Entity<Closet>().ToTable("Closet");
             modelBuilder.Entity<Item>().ToTable("Item");
             modelBuilder.Entity<Person>().ToTable("Persons");
+            modelBuilder.Entity<Token>().ToTable("Tokens");
 
             modelBuilder.Entity<Person>()
                         .HasDiscriminator<string>("Discriminator")
@@ -49,6 +51,11 @@ namespace OP_beContext.EFContext
                         .HasOne(u => u.Closet)
                         .WithOne(c => c.User)
                         .HasForeignKey<Closet>(x => x.UserId);
+
+            modelBuilder.Entity<Token>()
+                        .HasOne(u => u.User)
+                        .WithOne(t => t.Token)
+                        .HasForeignKey<User>(x => x.TokenId);
         }
     }
 }

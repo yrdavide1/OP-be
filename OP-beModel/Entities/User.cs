@@ -17,6 +17,8 @@ namespace OP_beModel.Entities
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public virtual Closet? Closet { get; set; }
+        public virtual Token? Token { get; set; }
+        public long TokenId { get; set; }
         public virtual ICollection<Ticket>? Ticket { get; set; }
         public virtual ICollection<Report>? Reports { get; set; }
     }
